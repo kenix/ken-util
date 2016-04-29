@@ -1,0 +1,3 @@
+rootProject.name = 'ken-util'
+include 'ken-util-base'
+include 'ken-util-rx'

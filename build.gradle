@@ -1,0 +1,51 @@
+/**
+ *
+ */
+plugins {
+    //id 'nebula.nebula-project' version '2.2.1'
+    id 'nebula.nebula-release' version '4.0.1'
+}
+
+group = 'org.kenix'
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+
+    ext {
+        artifact = project.name
+
+        versionRxJava = '1.0.16'
+        versionRxJavaString = '1.0.1'
+        versionRxNetty = '0.5.1'
+        versionLombok = '1.16.6'
+        versionGuava = '19.0'
+        versionGroovy = '2.4.6'
+        versionTwitter4j = '4.0.4'
+        versionJsoup = '1.8.3'
+        versionReactor = '1.1.6.RELEASE'
+        versionHystrix = '1.5.0'
+        versionSpock = '1.0-groovy-2.4'
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+
+        testCompile("org.codehaus.groovy:groovy-all:$versionGroovy")
+        testCompile("org.spockframework:spock-core:$versionSpock")
+    }
+}
+
+apply plugin: 'idea'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
+}
