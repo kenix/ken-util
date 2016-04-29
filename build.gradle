@@ -4,29 +4,37 @@
 plugins {
     //id 'nebula.nebula-project' version '2.2.1'
     id 'nebula.nebula-release' version '4.0.1'
+    id "io.spring.dependency-management" version "0.5.6.RELEASE"
 }
 
 group = 'org.kenix'
+ext {
+    artifactId = project.name
 
+    versionRxJava = '1.1.3'
+    versionRxJavaString = '1.0.1'
+    versionRxNetty = '0.5.1'
+    versionLombok = '1.16.6'
+    versionGuava = '19.0'
+    versionGroovy = '2.4.6'
+    versionTwitter4j = '4.0.4'
+    versionJsoup = '1.8.3'
+    versionReactor = '1.1.6.RELEASE'
+    versionHystrix = '1.5.0'
+    versionSpock = '1.0-groovy-2.4'
+    versionSpringBoot = '1.3.3.RELEASE'
+}
 
 subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'
+    apply plugin: 'io.spring.dependency-management'
 
-    ext {
-        artifact = project.name
-
-        versionRxJava = '1.0.16'
-        versionRxJavaString = '1.0.1'
-        versionRxNetty = '0.5.1'
-        versionLombok = '1.16.6'
-        versionGuava = '19.0'
-        versionGroovy = '2.4.6'
-        versionTwitter4j = '4.0.4'
-        versionJsoup = '1.8.3'
-        versionReactor = '1.1.6.RELEASE'
-        versionHystrix = '1.5.0'
-        versionSpock = '1.0-groovy-2.4'
+    dependencyManagement {
+        imports {
+            mavenBom("org.springframework.boot:spring-boot-dependencies:${versionSpringBoot}")
+//          mavenBom("org.springframework.boot:spring-boot-starter-parent:${springBootVersion}")
+        }
     }
 
     sourceCompatibility = 1.8
@@ -38,6 +46,7 @@ subprojects {
     }
 
     dependencies {
+        compile("org.springframework.boot:spring-boot-starter-logging")
 
         testCompile("org.codehaus.groovy:groovy-all:$versionGroovy")
         testCompile("org.spockframework:spock-core:$versionSpock")

@@ -1,0 +1,4 @@
+dependencies {
+    compile("org.codehaus.groovy:groovy-all:$versionGroovy")
+    compile("org.spockframework:spock-core:$versionSpock")
+}
