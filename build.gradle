@@ -51,6 +51,15 @@ subprojects {
         testCompile("org.codehaus.groovy:groovy-all:$versionGroovy")
         testCompile("org.spockframework:spock-core:$versionSpock")
     }
+
+    test {
+        maxParallelForks = 3
+        forkEvery = 50
+
+        testLogging {
+            events 'started', 'passed'
+        }
+    }
 }
 
 apply plugin: 'idea'
