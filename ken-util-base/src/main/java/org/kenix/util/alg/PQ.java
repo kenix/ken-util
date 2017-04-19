@@ -33,6 +33,10 @@ public abstract class PQ<T extends Comparable<T>> {
     }
   }
 
+  public boolean isEmpty() {
+    return this.nodes.size() <= 1;
+  }
+
   protected T get(int idx) {
     return this.nodes.get(idx);
   }
@@ -40,6 +44,9 @@ public abstract class PQ<T extends Comparable<T>> {
   protected abstract boolean isRightOrder(int leaf, int root);
 
   private void exch(int a, int b) {
+    if (a == b) {
+      return;
+    }
     final T t = this.nodes.get(a);
     this.nodes.set(a, this.nodes.get(b));
     this.nodes.set(b, t);
@@ -47,6 +54,38 @@ public abstract class PQ<T extends Comparable<T>> {
 
   public Optional<T> root() {
     return Optional.ofNullable(this.nodes.get(Math.min(1, this.nodes.size() - 1)));
+  }
+
+  public T removeRoot() {
+    final T r = this.nodes.get(Math.min(1, this.nodes.size() - 1));
+    if (r == null) {
+      return null;
+    }
+
+    exch(1, this.nodes.size() - 1);
+
+    final T result = this.nodes.remove(this.nodes.size() - 1);
+    if (this.nodes.size() > 1) {
+      sink(1);
+    }
+
+    return result;
+  }
+
+  private void sink(int i) {
+    while (i < this.nodes.size()) {
+      int cIdx = i * 2;
+      if (cIdx + 1 < this.nodes.size() && isRightOrder(cIdx, cIdx + 1)) {
+        cIdx = cIdx + 1;
+      }
+
+      if (cIdx < this.nodes.size() && !isRightOrder(cIdx, i)) {
+        exch(i, cIdx);
+        i = cIdx;
+      } else {
+        return;
+      }
+    }
   }
 
   @Override
